@@ -8,25 +8,7 @@
 
 <script>
 const Mouse = {
-  template: `<div><slot :x="x" :y="y"/></div>`,
-  data() {
-    return {
-      x: 0,
-      y: 0
-    }
-  },
-  mounted() {
-    window.addEventListener('mousemove', this.updateMouse)
-  },
-  destroyed() {
-    window.removeEventListener('mousemove', this.updateMouse)
-  },
-  methods: {
-    updateMouse(e) {
-      this.x = e.pageX
-      this.y = e.pageY
-    }
-  }
+
 }
 
 const app = new Vue({

@@ -5,24 +5,7 @@
 <script src="https://unpkg.com/vue"></script>
 <script type="module">
 function useMousePosition(vm) {
-  const position = Vue.observable({
-    x: 0,
-    y: 0
-  })
 
-  const update = e => {
-    position.x = e.pageX
-    position.y = e.pageY
-  }
-
-  vm.$on('hook:mounted', () => {
-    window.addEventListener('mousemove', update)
-  })
-  vm.$on('hook:destroyed', () => {
-    window.removeEventListener('mousemove', update)
-  })
-
-  return position
 }
 
 new Vue({

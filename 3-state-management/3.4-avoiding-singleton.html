@@ -13,14 +13,12 @@
 // - Works with SSR
 
 function createStore({ state, mutations }) {
-  return new Vue({
-    data: { state },
-    methods: {
-      commit(key, ...args) {
-        mutations[key](state, ...args)
-      }
+  return {
+    state: Vue.observable(state),
+    commit(key, ...args) {
+      mutations[key](state, ...args)
     }
-  })
+  }
 }
 
 const store = createStore({

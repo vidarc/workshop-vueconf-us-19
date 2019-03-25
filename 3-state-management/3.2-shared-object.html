@@ -10,16 +10,14 @@
 <script>
 // sharing state between components
 
-const sharedState = {
+const sharedState = Vue.observable({
   count: 0
-}
+})
 
 // --
 
 const Counter = {
-  data() {
-    return sharedState
-  },
+  data: () => sharedState,
   template: `<div>{{ count }}</div>`
 }
 
