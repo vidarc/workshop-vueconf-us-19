@@ -1,0 +1,48 @@
+<script src="https://unpkg.com/vue"></script>
+
+<div id="app">
+  <demo></demo>
+</div>
+
+<script>
+const withMousePosition = InnerComp => ({
+  data() {
+    return {
+      x: 0,
+      y: 0
+    }
+  },
+  mounted() {
+    window.addEventListener('mousemove', this.updateMouse)
+  },
+  destroyed() {
+    window.removeEventListener('mousemove', this.updateMouse)
+  },
+  methods: {
+    updateMouse(e) {
+      this.x = e.pageX
+      this.y = e.pageY
+    }
+  },
+  render(h) {
+    return h(InnerComp, {
+      props: {
+        x: this.x,
+        y: this.y
+      }
+    })
+  }
+})
+
+const Demo = withMousePosition({
+  props: ['x', 'y'],
+  template: `<div>Mouse position: x {{ x }} / y {{ y }}</div>`
+})
+
+const app = new Vue({
+  el: '#app',
+  components: {
+    Demo
+  }
+})
+</script>

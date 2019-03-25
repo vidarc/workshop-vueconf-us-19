@@ -1,0 +1,34 @@
+<script>
+// examples on alternative API designs for consuming injected store state in
+// components.
+
+// decorators
+@useState(['count'])
+export default {
+  props: ['count'],
+  template: `<div>{{ count }}</div>`
+}
+</script>
+
+<!-- scoped slot component -->
+<script>
+const UseStore = {
+  render() {
+    const slotFn = this.$scopedSlots.default
+    if (slotFn) {
+      return slotFn(this.$store)[0]
+    }
+  }
+}
+</script>
+
+<use-store>
+  <template slot-scope="{
+    state: { foo, bar },
+    dispatch
+  }">
+    {{ foo }}
+    {{ bar }}
+    <button @click="dispatch('inc')"></button>
+  </template>
+</use-store>
