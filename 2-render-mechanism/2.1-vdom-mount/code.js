@@ -2,20 +2,30 @@ export function h(tag, attrs, children) {
   return {
     tag,
     attrs,
-    children
+    children: children.map(child => {
+      if (typeof child === 'string') {
+        return {
+          type: 'text',
+          text: child
+        }
+      } else {
+        return { ...child, type: 'element' }
+      }
+    })
   }
 }
 
 export function mount(vdom, container) {
   let dom
-  switch(typeof vdom) {
-    case 'string':
-      dom = mountText(vdom)
-      break
-    default:
-      dom = mountElement(vdom)
+  if (vdom.type === 'text') {
+    dom = mountText(vdom)
+  } else {
+    dom = mountElement(vdom)
   }
 
+  if (!container) {
+    return dom
+  }
   container.appendChild(dom)
 }
 
@@ -34,9 +44,15 @@ function mountElement(vdom) {
     })
   }
 
+  vdom.dom = dom
+
   return dom
 }
 
 function mountText(vdom) {
-  return document.createTextNode(vdom)
+  const dom = document.createTextNode(vdom.text)
+
+  vdom.dom = dom
+
+  return dom
 }

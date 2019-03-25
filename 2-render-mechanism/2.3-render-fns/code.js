@@ -4,5 +4,15 @@ import { h, mount, patch } from '../2.2-vdom-patch/code.js'
 export { h, observable }
 
 export function bootstrap(render, container) {
-
+  let vdom
+  effect(() => {
+    if (!vdom) {
+      vdom = render()
+      mount(vdom, container)
+    } else {
+      const oldVdom = vdom
+      vdom = render()
+      patch(oldVdom, vdom)
+    }
+  })
 }
