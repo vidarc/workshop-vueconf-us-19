@@ -1,4 +1,6 @@
-export { h, mount } from '../2.1-vdom-mount/code.js'
+import { h, mount } from '../2.1-vdom-mount/code.js'
+
+export { h, mount }
 
 export function patch(vdom1, vdom2) {
   if (vdom1.type === vdom2.type) {
@@ -60,9 +62,7 @@ function patchText(vdom1, vdom2) {
 }
 
 function replaceNode(vdom1, vdom2) {
-  console.log('hello')
-  const newDom = mount(vdom2.dom)
-  console.log(newDom)
+  const newDom = mount(vdom2)
   vdom1.dom.parentNode.insertBefore(newDom, vdom1.dom)
   removeNode(vdom1)
 }
